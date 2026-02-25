@@ -16,14 +16,16 @@
 
     <dialog id="add-book-dialog">
         <form>
-            <label for="book-title">Title:</label>
+            <div><b>*</b> means a field is required.</div>
+
+            <label for="book-title">Title<b>*</b>:</label>
             <input id="book-title" name="book-title" type="text" required>
             
-            <label for="book-author">Author:</label>
+            <label for="book-author">Author<b>*</b>:</label>
             <input id="book-author" name="book-author" type="text" required>
 
-            <label for="book-pages"># of pages:</label>
-            <input id="book-pages" name="book-pages" type="number" required>
+            <label for="book-pages"># of pages<b>*</b>:</label>
+            <input id="book-pages" name="book-pages" type="number" min="1" required>
 
             <label for="book-read">Finished reading:</label>
             <input type="checkbox" id="book-read" name="book-read"/>

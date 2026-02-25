@@ -59,8 +59,12 @@ body {
 /* Add book */
 form {
     display: grid;
-    grid-template: repeat(5, 1fr) / 16ch auto;
+    grid-template-columns: 16ch auto;
     gap: 0.5rem;
+}
+
+form > *:first-child {
+    grid-column: 1 / -1;
 }
 
 #add-book-buttons {

@@ -57,8 +57,6 @@ const library = {
     },
 }
 
-
-
 function Book(title, author, pages, hasRead) {
     if (!new.target) {
         throw Error("You must use the 'new' operator to call the constructor");
