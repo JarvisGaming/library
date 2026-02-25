@@ -1,5 +1,7 @@
 const books = [];
-const bookDisplay = document.querySelector("#book");
+const bookDisplay = document.querySelector("#books");
+const bookTemplate = document.querySelector("template")
+console.log(bookTemplate);
 
 function Book(title, author, pages, hasRead) {
     if (!new.target) {
@@ -24,10 +26,17 @@ function addBookToLibrary(title, author, pages, hasRead) {
 
 function displayAllBooks(){
     for (const [id, book] of books){
-        console.log(book.info());
+        const bookInstance = bookTemplate.content.cloneNode(true);
+        bookInstance.querySelector(".title").textContent = book.title;
+        bookInstance.querySelector(".author").textContent = book.author;
+        bookInstance.querySelector(".pages").textContent = book.pages;
+        bookInstance.querySelector(".has-read").textContent = book.hasRead ? "Yes" : "No";
+        bookDisplay.appendChild(bookInstance);
     }
 }
 
+addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, false);
+addBookToLibrary("A Comprehensive Guide To Mapping Taiko", "JarvisGaming", 87, true);
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, false);
 addBookToLibrary("A Comprehensive Guide To Mapping Taiko", "JarvisGaming", 87, true);
 displayAllBooks();
