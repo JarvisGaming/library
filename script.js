@@ -1,6 +1,15 @@
 const books = new Map();
 const bookDisplay = document.querySelector("#books");
-const bookTemplate = document.querySelector("template")
+const bookTemplate = document.querySelector("template");
+
+const addBookConfirmButton = document.querySelector("#add-book-confirm-button");
+const dialog = document.querySelector("#add-book-dialog");
+
+const dialogBookTitle = document.querySelector("#book-dialog");
+const dialogBookAuthor = document.querySelector("#book-author");
+const dialogBookPages = document.querySelector("#book-pages");
+const dialogBookRead = document.querySelector("#book-read");
+const form = document.querySelector("#add-book-dialog form");
 
 const library = {
     addBook(title, author, pages, hasRead) {
@@ -48,6 +57,8 @@ const library = {
     },
 }
 
+
+
 function Book(title, author, pages, hasRead) {
     if (!new.target) {
         throw Error("You must use the 'new' operator to call the constructor");
@@ -66,6 +77,26 @@ function Book(title, author, pages, hasRead) {
 Book.prototype.changeHasRead = function(){
     this.hasRead = !this.hasRead;
 }
+
+addBookConfirmButton.addEventListener("click", (event) => {
+    // Perform client-side validation
+    if (!form.reportValidity()) return;
+
+    event.preventDefault();
+
+    const {elements} = form;
+    console.log(elements)
+
+    library.addBook(
+        elements["book-title"].value,
+        elements["book-author"].value,
+        elements["book-pages"].value,
+        elements["book-read"].checked,
+    )
+    library.updateBookDisplay();
+    
+    dialog.close();
+});
 
 library.addBook("The Hobbit", "J.R.R. Tolkien", 295, false);
 library.addBook("A Comprehensive Guide To Mapping Taiko", "JarvisGaming", 87, true);

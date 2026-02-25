@@ -11,7 +11,29 @@
 <body>
     <h1 id="title">The Taiko Compendium</h1>
     <div id="books"></div>
-    <button class="new-book">Add New Book</button>
+
+    <button class="add-book" command="show-modal" commandfor="add-book-dialog">Add New Book</button>
+
+    <dialog id="add-book-dialog">
+        <form>
+            <label for="book-title">Title:</label>
+            <input id="book-title" name="book-title" type="text" required>
+            
+            <label for="book-author">Author:</label>
+            <input id="book-author" name="book-author" type="text" required>
+
+            <label for="book-pages"># of pages:</label>
+            <input id="book-pages" name="book-pages" type="number" required>
+
+            <label for="book-read">Finished reading:</label>
+            <input type="checkbox" id="book-read" name="book-read"/>
+            
+            <div id="add-book-buttons">
+                <button formmethod="dialog" value="cancel">Cancel</button>
+                <button id="add-book-confirm-button" value="confirm" type="submit">Add</button>
+            </div>
+        </form>
+    </dialog>
 
     <template>
         <div class="book">
