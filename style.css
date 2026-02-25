@@ -1,0 +1,32 @@
+* {
+    border: 2px solid red;
+}
+
+* > * {
+    border: 2px solid blue;
+}
+
+* > * > * {
+    border: 2px solid green;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#title {
+    text-align: center;
+}
+
+#books {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 50ch);
+    justify-content: center;
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+    min-width: fit-content;
+}

@@ -1,4 +1,5 @@
-const myLibrary = [];
+const books = [];
+const bookDisplay = document.querySelector("#book");
 
 function Book(title, author, pages, hasRead) {
     if (!new.target) {
@@ -18,11 +19,11 @@ function Book(title, author, pages, hasRead) {
 function addBookToLibrary(title, author, pages, hasRead) {
     const id = crypto.randomUUID();
     const book = new Book(title, author, pages, hasRead);
-    myLibrary.push([id, book]);
+    books.push([id, book]);
 }
 
 function displayAllBooks(){
-    for (const [id, book] of myLibrary){
+    for (const [id, book] of books){
         console.log(book.info());
     }
 }
