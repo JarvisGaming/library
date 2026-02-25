@@ -96,8 +96,8 @@ addBookConfirmButton.addEventListener("click", (event) => {
     dialog.close();
 });
 
-library.addBook("The Hobbit", "J.R.R. Tolkien", 295, false);
-library.addBook("A Comprehensive Guide To Mapping Taiko", "JarvisGaming", 87, true);
-library.addBook("The Hobbit", "J.R.R. Tolkien", 295, false);
-library.addBook("A Comprehensive Guide To Mapping Taiko", "JarvisGaming", 87, true);
+library.addBook("A Comprehensive Guide To Mapping Taiko", "JarvisGaming", 94, true);
+library.addBook("Things to look out for before requesting for BN Checks", "Jerry", 9, false);
+library.addBook("History of osu!taiko", "Default Guy", 22, false);
+library.addBook("Project Future Sight", "Default Guy", 15, false);
 library.updateBookDisplay();
