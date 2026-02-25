@@ -17,6 +17,10 @@ function Book(title, author, pages, hasRead) {
     }
 }
 
+Book.prototype.changeHasRead = function(){
+    this.hasRead = !this.hasRead;
+}
+
 function addBookToLibrary(title, author, pages, hasRead) {
     const book = new Book(title, author, pages, hasRead);
     books.set(crypto.randomUUID(), book);
@@ -32,16 +36,21 @@ function updateBookDisplay(){
         bookInstance.querySelector(".author").textContent = book.author;
         bookInstance.querySelector(".pages").textContent = book.pages;
         bookInstance.querySelector(".has-read").textContent = book.hasRead ? "Yes" : "No";
-        bookInstance.querySelector(".uuid").textContent = id;
         bookInstance.querySelector(".delete-button").addEventListener("click", deleteBook);
         bookDisplay.appendChild(bookInstance);
+
+        bookDisplay.lastElementChild.dataset.uuid = id;
     }
+}
+
+function changeReadStatus(){
+
 }
 
 function deleteBook(){
     let bookElement = this;
     while (bookElement.className != "book") bookElement = bookElement.parentElement;
-    const bookID = bookElement.querySelector(".uuid").innerText;
+    const bookID = bookElement.dataset.uuid;
     books.delete(bookID);
     bookDisplay.removeChild(bookElement);
 
