@@ -3,6 +3,7 @@ const bookDisplay = document.querySelector("#books");
 const bookTemplate = document.querySelector("template");
 
 const addBookConfirmButton = document.querySelector("#add-book-confirm-button");
+const cancelButton = document.querySelector("#cancel-button");
 const dialog = document.querySelector("#add-book-dialog");
 
 const dialogBookTitle = document.querySelector("#book-dialog");
@@ -93,8 +94,14 @@ addBookConfirmButton.addEventListener("click", (event) => {
     )
     library.updateBookDisplay();
     
+    form.reset();  // Empty all form fields
     dialog.close();
 });
+
+cancelButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    dialog.close();
+})
 
 library.addBook("A Comprehensive Guide To Mapping Taiko", "JarvisGaming", 94, true);
 library.addBook("Things to look out for before requesting for BN Checks", "Jerry", 9, false);
