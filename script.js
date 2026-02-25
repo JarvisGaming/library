@@ -36,25 +36,33 @@ function updateBookDisplay(){
         bookInstance.querySelector(".author").textContent = book.author;
         bookInstance.querySelector(".pages").textContent = book.pages;
         bookInstance.querySelector(".has-read").textContent = book.hasRead ? "Yes" : "No";
+
+        bookInstance.querySelector(".change-read-status-button").addEventListener("click", changeReadStatus);
         bookInstance.querySelector(".delete-button").addEventListener("click", deleteBook);
+
         bookDisplay.appendChild(bookInstance);
 
         bookDisplay.lastElementChild.dataset.uuid = id;
     }
 }
 
-function changeReadStatus(){
+function getBookElement(currentElement){
+    while (currentElement.className != "book") currentElement = currentElement.parentElement;
+    return currentElement;
+}
 
+function changeReadStatus(){
+    const bookElement = getBookElement(this)
+    const bookID = bookElement.dataset.uuid;
+    books.get(bookID).changeHasRead();
+    updateBookDisplay();
 }
 
 function deleteBook(){
-    let bookElement = this;
-    while (bookElement.className != "book") bookElement = bookElement.parentElement;
+    const bookElement = getBookElement(this)
     const bookID = bookElement.dataset.uuid;
     books.delete(bookID);
-    bookDisplay.removeChild(bookElement);
-
-    console.log(books);
+    updateBookDisplay();
 }
 
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, false);
