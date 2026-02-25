@@ -1,7 +1,6 @@
 const books = [];
 const bookDisplay = document.querySelector("#books");
 const bookTemplate = document.querySelector("template")
-console.log(bookTemplate);
 
 function Book(title, author, pages, hasRead) {
     if (!new.target) {
@@ -31,8 +30,15 @@ function displayAllBooks(){
         bookInstance.querySelector(".author").textContent = book.author;
         bookInstance.querySelector(".pages").textContent = book.pages;
         bookInstance.querySelector(".has-read").textContent = book.hasRead ? "Yes" : "No";
+        bookInstance.querySelector(".delete-button").addEventListener("click", deleteBook);
         bookDisplay.appendChild(bookInstance);
     }
+}
+
+function deleteBook(event){
+    let bookElement = this;
+    while (bookElement.className != "book") bookElement = bookElement.parentElement;
+    bookDisplay.removeChild(bookElement);
 }
 
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, false);
