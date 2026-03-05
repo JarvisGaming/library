@@ -12,70 +12,77 @@ const dialogBookPages = document.querySelector("#book-pages");
 const dialogBookRead = document.querySelector("#book-read");
 const form = document.querySelector("#add-book-dialog form");
 
-const library = {
+class Library {
+    #books = new Map();
+
     addBook(title, author, pages, hasRead) {
         const book = new Book(title, author, pages, hasRead);
-        books.set(crypto.randomUUID(), book);
-    },
+        this.#books.set(crypto.randomUUID(), book);
+    }
     
     updateBookDisplay(){
         // Clear all books, if any
         bookDisplay.innerHTML = "";
     
-        for (const [id, book] of books){
+        for (const [id, book] of this.#books){
             const bookInstance = bookTemplate.content.cloneNode(true);
             bookInstance.querySelector(".title").textContent = book.title;
             bookInstance.querySelector(".author").textContent = book.author;
             bookInstance.querySelector(".pages").textContent = book.pages;
             bookInstance.querySelector(".has-read").textContent = book.hasRead ? "Yes" : "No";
     
-            bookInstance.querySelector(".change-read-status-button").addEventListener("click", this._changeReadStatus);
-            bookInstance.querySelector(".delete-button").addEventListener("click", this._deleteBook);
+            bookInstance.querySelector(".change-read-status-button").addEventListener("click", this.#changeReadStatus);
+            bookInstance.querySelector(".delete-button").addEventListener("click", this.#deleteBook);
     
             bookDisplay.appendChild(bookInstance);
     
             bookDisplay.lastElementChild.dataset.uuid = id;
         }
-    },
+    }
 
-    _getBookElement(currentElement){
+    #getBookElement(currentElement){
         while (currentElement.className != "book") currentElement = currentElement.parentElement;
         return currentElement;
-    },
+    }
 
-    _changeReadStatus(){
-        const bookElement = library._getBookElement(this)
+    #changeReadStatus = (event) => {
+        const bookElement = this.#getBookElement(event.target)
         const bookID = bookElement.dataset.uuid;
-        books.get(bookID).changeHasRead();
-        library.updateBookDisplay();
-    },
+        this.#books.get(bookID).changeHasRead();
+        this.updateBookDisplay();
+    }
     
-    _deleteBook(){
-        const bookElement = library._getBookElement(this)
+    #deleteBook = (event) => {
+        const bookElement = this.#getBookElement(event.target)
         const bookID = bookElement.dataset.uuid;
-        books.delete(bookID);
-        library.updateBookDisplay();
-    },
-}
-
-function Book(title, author, pages, hasRead) {
-    if (!new.target) {
-        throw Error("You must use the 'new' operator to call the constructor");
-    }
-
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.hasRead = hasRead;
-
-    this.info = function(){
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.hasRead ? "already read" : "not read yet"}`;
+        this.#books.delete(bookID);
+        this.updateBookDisplay();
     }
 }
 
-Book.prototype.changeHasRead = function(){
-    this.hasRead = !this.hasRead;
+const library = new Library();
+
+class Book {
+    constructor(title, author, pages, hasRead) {
+        if (!new.target) {
+            throw Error("You must use the 'new' operator to call the constructor");
+        }
+
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.hasRead = hasRead;
+
+        this.info = function () {
+            return `${this.title} by ${this.author}, ${this.pages} pages, ${this.hasRead ? "already read" : "not read yet"}`;
+        };
+    }
+
+    changeHasRead() {
+        this.hasRead = !this.hasRead;
+    }
 }
+
 
 addBookConfirmButton.addEventListener("click", (event) => {
     // Perform client-side validation
